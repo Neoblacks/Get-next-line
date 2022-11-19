@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:48:42 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/17 18:13:36 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/19 20:36:02 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 {
 	int		i;
 	int		j;
@@ -31,7 +31,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		len;
 
 	i = 0;
-	len = ft_strlen(s1) + ft_strlen(s2);
+	len = ft_strlen(s1) + n;
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
@@ -77,3 +77,36 @@ void	ft_bzero(void *s, size_t nb)
 		i++;
 	}
 }
+
+ssize_t		ft_get_index(char *str, char searched_char)
+{
+	ssize_t	i;
+
+	i = 0;
+	while (str[i] != searched_char && str[i] != '\0')
+		i++;
+	if (str[i] != searched_char)
+		return (-1);
+	return (i);
+}
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (size > 0)
+	{
+		while (src[i] && i < (size - 1))
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = 0;
+	}
+	while (src[i])
+		i++;
+	return (i);
+}
+
+

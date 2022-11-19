@@ -6,23 +6,30 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:57:08 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/17 21:43:47 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/19 20:38:09 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_add(char *buffer, char *buff)
+char	*ft_add(char *dest, char *src, ssize_t n)
 {
-	char	*tmp;
+	char	*new;
 
-	tmp = ft_strjoin(buffer, buff);
-	free(buffer);
-	return (tmp);
+	new = ft_strnjoin(dest, src, n);
+	free(dest);
+	return (new);
 }
 
 void	ft_cut(char *buffer, char **line, char *rest)
 {
+	ssize_t	len;
+
+	len = ft_get_index(buffer, '\n');
+	if(!*line)
+		return ;
+	*line = ft_add(*line, buffer, len);
+	ft_strlcpy(rest, buffer + len, BUFFER_SIZE - len + 1);
 }
 
 char	*readFile(int fd, char *line, char *rest)
@@ -31,71 +38,42 @@ char	*readFile(int fd, char *line, char *rest)
 	ssize_t		bytes;
 
 	bytes = read(fd, buffer, BUFFER_SIZE);
-	while (bytes > 0 && ft_strchr(buffer, '\n') != NULL)
+	while (bytes > 0 && ft_strchr(buffer, "\n") != NULL)
 	{
-		line = ft_add(line, buffer);
+		line = ft_add(line, buffer, ft_get_index(buffer, '\n'));
 		bytes = read(fd, buffer, BUFFER_SIZE);
 	}
-	ft_cut(buffer, line, rest);
-}
-
-char	*ft_next(char *buffer)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	// buffer = ft_strchr('\n');
-	while (buffer[i] != '\n' && buffer[i] != 0)
-		i++;
-	if (!buffer[i])
-	{
-		free(buffer);
-		return (NULL);
-	}
-	str = malloc(sizeof(char) * ft_strlen(buffer - i + 1));
-	if (!str)
-		return (NULL);
-	i++;
-	j = 0;
-	while (buffer[i] != '\0')
-		str[j++] = buffer[i++];
-	free(buffer);
-	return (str);
+	ft_cut(buffer, &line, rest);
 }
 
 char	*get_next_line(int fd)
 {
-	static char		*rest;
+	static char		rest[BUFFER_SIZE + 1];
 	char			*line;
 
-	if (fd < 0 || read(fd, 0, 0) <= 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer =; //fonction qui renvoie la ligne ?
-	if (!buffer)
-		return (NULL);
-	line =; //ft pour get la ligne;
-	buffer =; //ft_next;
-
+	line = readFile(fd, line, rest);
 	return (line);
 }
-//read file function
 
-//get next line function final
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
 
-// int	main(void)
-// {
-// 	int	fd;
+int	main(int argc, char **argv)
+{
+	int	fd;
 
-// 	fd = open(argv[1(chemin du fichier)], FLAGS);
-// 	char *line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		free(line);
-// 		line = get_next_line(fd);
-// 		printf("[%s]", line);
-// 	}
-// 	close(fd);
-// 	free(line);
-// }
+	fd = open(argv[1], O_RDONLY);
+	char *line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+		printf("[%s]", line);
+	}
+	close(fd);
+	free(line);
+}
