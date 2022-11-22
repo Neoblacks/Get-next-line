@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:48:42 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/21 21:37:27 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:13:58 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ size_t	ft_strlen(const char *s)
 char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 {
 	char	*str;
-	int		len1;
-	int		len2;
+	size_t	len1;
+	size_t	len2;
 
 	len1 = 0;
 	if (s1 != NULL)
@@ -36,25 +36,26 @@ char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 	if (len2 > n)
 		len2 = n;
 	str = malloc(sizeof(char) * (len1 + len2 + 1));
-	if (!str)
+	if (str == NULL)
 		return (NULL);
-	if (!s1)
+	if (s1 != NULL)
 		ft_strlcpy(str, s1, len1 + 1);
 	ft_strlcpy(str + len1, s2, len2 + 1);
 	return (str);
 }
 
-char	*ft_strchr(const char *str, const char *charsearch)
+char	*ft_strchr(const char *s, int c)
 {
-	char	*string;
+	char	*str;
 
-	string = (char *)str;
-	while (*string != *charsearch && *string != 0)
-		string++;
-	if (*string == *charsearch)
-		return (string);
-	else
-		return (NULL);
+	str = (char *)s;
+	while (*str != (char)c)
+	{
+		if (*str == '\0')
+			return (NULL);
+		str++;
+	}
+	return (str);
 }
 
 void	ft_bzero(void *s, size_t nb)
