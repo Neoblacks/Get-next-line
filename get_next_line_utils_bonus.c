@@ -6,12 +6,11 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:48:42 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/23 16:07:46 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:12:00 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:46:42 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/23 17:13:09 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:51:00 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
+# include <stdio.h>
 
 char		*get_next_line(int fd);
 char		*ft_strnjoin(char const *s1, char const *s2, size_t n);

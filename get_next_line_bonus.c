@@ -6,18 +6,17 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:57:08 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/23 17:12:16 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:12:07 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
-#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 char	*ft_add(char *dest, char *src, ssize_t n)
 {
 	char	*new;
 
+	new = NULL;
 	if (n != -1)
 	{
 		new = ft_strnjoin(dest, src, n);
