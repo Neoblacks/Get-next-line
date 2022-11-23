@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:48:42 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/22 13:13:58 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:33:34 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,13 @@ void	ft_bzero(void *s, size_t nb)
 	}
 }
 
-ssize_t		ft_get_index(char *str, char searched_char)
-{
-	ssize_t	i;
-
-	i = 0;
-	while (str[i] != searched_char && str[i] != '\0')
-		i++;
-	if (str[i] != searched_char)
-		return (-1);
-	return (i);
-}
-
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	i;
 
 	i = 0;
-	if(!src)
-		return(0);
+	if (!src)
+		return (0);
 	if (size > 0)
 	{
 		while (src[i] && i < (size - 1))
@@ -104,5 +92,3 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 		i++;
 	return (i);
 }
-
-

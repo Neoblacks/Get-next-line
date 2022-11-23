@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:57:08 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/22 16:21:42 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:02:35 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,22 @@ char	*ft_add(char *dest, char *src, ssize_t n)
 void	ft_cut(char *buffer, char *rest)
 {
 	ssize_t	len;
+
 	len = ft_get_index(buffer, '\n');
 	if (len >= 0)
 		ft_strlcpy(rest, buffer + len + 1, BUFFER_SIZE);
+}
+
+ssize_t	ft_get_index(char *str, char searched_char)
+{
+	ssize_t	i;
+
+	i = 0;
+	while (str[i] != searched_char && str[i] != '\0')
+		i++;
+	if (str[i] != searched_char)
+		return (-1);
+	return (i);
 }
 
 char	*readfile(int fd, char *line, char *rest)
@@ -51,6 +64,13 @@ char	*readfile(int fd, char *line, char *rest)
 	{
 		line = ft_add(line, buffer, ft_get_index(buffer, '\n') + 1);
 		ft_cut(buffer, rest);
+	}
+	if (bytes == 0 && line == NULL)
+		return (NULL);
+	if (bytes == 0 && line[0] != '\0')
+	{
+		ft_bzero(rest, BUFFER_SIZE);
+		return (line);
 	}
 	return (line);
 }
@@ -76,25 +96,3 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-
-// #include <sys/types.h>
-// #include <sys/stat.h>
-// #include <fcntl.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	int	fd;
-
-// 	fd = open(argv[1], O_RDONLY);
-// 	char *line;
-// 	line = get_next_line(fd);
-// 	while (line != NULL)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 		line = get_next_line(fd);
-// 	}
-// 	close(fd);
-// 	free(line);
-// }
